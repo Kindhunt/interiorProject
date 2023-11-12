@@ -1,25 +1,11 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts
+class Interactor : AbstractInteraction<IInteractionSystem>
 {
-	public class Interactor : MonoBehaviour
+	public void Update()
 	{
-		[SerializeField]
-		private Transform _interactSource;
-
-		[SerializeField]
-		private float _interactDistance;
-
-		public void Update() {
-			if (Input.GetKeyDown(KeyCode.E)) {
-				if (Physics.Raycast(new Ray(_interactSource.position, _interactSource.forward), 
-					out RaycastHit hitInfo, 
-					_interactDistance)) { 
-					if (hitInfo.collider.gameObject.TryGetComponent(out IInteractionSystem interaction)) {
-						interaction.Interact();
-					}
-				}
-			}
+		if (CheckRaycast()) {
+			_interacted.Interact();
 		}
 	}
 }

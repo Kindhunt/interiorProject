@@ -26,7 +26,9 @@ namespace Assets.Scripts.AdditionalScripts
 		public void CreateSilhouette(GameObject gameObject) {
 			_itemSilhouette = gameObject;
 			// _itemHeight = _itemSilhouette.GetComponent<MeshRenderer>().bounds.size.y;
-			_itemSilhouette.GetComponent<Collider>().enabled = false;
+			_itemSilhouette.GetComponent<Collider>().enabled = true;
+			_itemSilhouette.GetComponent<Collider>().isTrigger = true;
+			_itemSilhouette.GetComponent<ItemInteractHint>().enabled = false;
 			_itemSilhouette.GetComponent<Renderer>().material = _silhouetteMaterial;
 		}
 
@@ -41,7 +43,7 @@ namespace Assets.Scripts.AdditionalScripts
 			{
 				_placeable = true;
 				_itemSilhouette.SetActive(true);
-				_itemSilhouette.transform.position = new Vector3(hit.point.x, hit.point.y, hit.point.z);
+				_itemSilhouette.transform.position = new Vector3(hit.point.x, hit.point.y + 0.01f, hit.point.z);
 			}
 			else {
 				_placeable = false;

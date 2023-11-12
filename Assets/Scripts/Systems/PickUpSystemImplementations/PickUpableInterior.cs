@@ -1,7 +1,7 @@
 using Assets.Scripts.AdditionalScripts;
 using UnityEngine;
 
-public class InteractableInterior : MonoBehaviour, IInteractionSystem
+public class PickUpableInterior : MonoBehaviour, IPickUpSystem
 {
 	[SerializeField]
 	private Transform _hand;
@@ -20,20 +20,9 @@ public class InteractableInterior : MonoBehaviour, IInteractionSystem
 		if (_isPicked) {
 			_silhouette.MoveSilhouette(_placeDistance);
 		}
-
-		if (Input.GetKeyDown(KeyCode.E)) {
-			Interact();
-		}
 	}
 
-	public void Interact() {
-		if (!_isPicked) GetObject();
-		else {
-			if (_silhouette.Placeable)
-				PlaceObject();
-		}
-	}
-	private void GetObject() 
+	public void PickUp() 
 	{		
 		transform.position = _hand.localPosition;
 		transform.rotation = _hand.localRotation;
@@ -44,7 +33,7 @@ public class InteractableInterior : MonoBehaviour, IInteractionSystem
 
 		_silhouette.CreateSilhouette(Instantiate(gameObject));
 	}
-	private void PlaceObject()
+	public void Drop()
 	{
 		transform.SetParent(null);
 
@@ -54,5 +43,8 @@ public class InteractableInterior : MonoBehaviour, IInteractionSystem
 		_isPicked = false;
 
 		_silhouette.DisposeSilhouette();
+	}
+	public bool IsPicked() {
+		return _isPicked;
 	}
 }
